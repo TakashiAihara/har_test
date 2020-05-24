@@ -1,14 +1,14 @@
 from browsermobproxy import Server
 from selenium import webdriver
 
-server = Server('path_to_executable')
+server = Server('/usr/local/Cellar/browsermob-proxy/2.1.4/bin/browsermob-proxy')
 server.start()
 proxy = server.create_proxy()
 profile  = webdriver.FirefoxProfile()
 profile.set_proxy(proxy.selenium_proxy())
 driver = webdriver.Firefox(firefox_profile=profile)
 proxy.new_har("file_name", options={'captureHeaders': True, 'captureContent': True})
-driver.get("your_url")
+driver.get("https://www.google.co.jp")
 proxy.wait_for_traffic_to_stop(1, 60)
 for ent in proxy.har['log']['entries']:
     print(ent)
